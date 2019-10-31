@@ -1,0 +1,12 @@
+package com.cos.util;
+
+public class Test {
+	public static void main(String[] args) {
+		
+		byte[] input = "ㅇ".getBytes();
+		
+		System.out.println(input.length);
+		System.out.println(input[0]);
+
+	}
+}

@@ -1,0 +1,12 @@
+package com.cos.util;
+
+import java.security.MessageDigest;
+
+public class Test {
+	public static void main(String[] args) {
+		
+		byte i = -128;
+		System.out.println(Integer.toBinaryString(i & 0xff));
+	
+	}
+}

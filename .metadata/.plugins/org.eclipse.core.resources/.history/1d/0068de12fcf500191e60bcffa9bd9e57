@@ -1,0 +1,59 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.cos.model.User;
+import com.cos.util.DBClose;
+
+public class UserDao {
+	// 나중에 할 것 : 싱글톤으로 만들 것
+	
+	private Connection conn; //MySQL과 연결하기 위한 객체
+	private PreparedStatement pstmt; //SQL 작성을 위한 객체
+	private ResultSet rs; //결과를 보관할 객체
+	
+	public int save(User user) {
+		
+		conn = DBConn.getConnection();
+		
+		final String SQL = "INSERT INTO user(username, password, email, createDate) VALUES(?, ?, ?, now())";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setString(1, user.getUsername());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getEmail());
+			
+			int result = pstmt.executeUpdate(); //변경된 튜플의 갯수 리턴
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+		return -1;
+	}
+	
+	// 로그인   1:성공, -1:실패
+	public int findByUsernameAndPassword(String username, String password) {
+		
+		conn = DBConn.getConnection();
+		
+		final String SQL = "SELECT * FROM user WHERE username=? and password=?";
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	
+	
+}

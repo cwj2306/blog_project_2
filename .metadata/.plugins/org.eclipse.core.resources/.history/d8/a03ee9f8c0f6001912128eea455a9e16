@@ -1,0 +1,15 @@
+package com.cos.util;
+
+public class SHA256 {
+	//password를 hashing하여 반환
+	
+	public static String getEncrypt(String rawPassword, String salt) {
+		
+		String result = "";
+		
+		byte[] a = rawPassword.getBytes();
+		byte[] b = new byte[ rawPassword.length() + salt.length() ];
+		
+		return result;		
+	}
+}
