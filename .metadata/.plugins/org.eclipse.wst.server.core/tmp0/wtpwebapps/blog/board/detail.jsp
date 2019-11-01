@@ -23,7 +23,7 @@
        							<div class="float-right">
        								<div class="media">
        									<div class="media-body">
-       										<h5>${board.userId}</h5>
+       										<h5>${board.user.username}</h5>
        										<p>${board.createDate}</p>
        									</div>
        									<div class="d-flex">

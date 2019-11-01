@@ -15,29 +15,29 @@ public class BoardDao {
 	private ResultSet rs; //결과를 보관할 객체
 	
 	//글쓰기
-		public int update(Board board) {
-			conn = DBConn.getConnection();
+	public int update(Board board) {
+		conn = DBConn.getConnection();
+		
+		final String SQL = "UPDATE board SET title = ?, content = ? WHERE id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
 			
-			final String SQL = "UPDATE board SET title = ?, content = ? WHERE id = ?";
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getId());
 			
-			try {
-				pstmt = conn.prepareStatement(SQL);
-				
-				pstmt.setString(1, board.getTitle());
-				pstmt.setString(2, board.getContent());
-				pstmt.setInt(3, board.getId());
-				
-				int result = pstmt.executeUpdate(); //변경된 튜플의 갯수 리턴
-				return result;
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				DBClose.close(conn, pstmt);
-			}
-			
-			return -1;
-
+			int result = pstmt.executeUpdate(); //변경된 튜플의 갯수 리턴
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
 		}
+		
+		return -1;
+
+	}
 	
 	//글쓰기
 	public int save(Board board) {
@@ -83,7 +83,7 @@ public class BoardDao {
 				board.setContent(rs.getString("content"));
 				board.setReadCount(rs.getInt("readCount"));
 				board.setCreateDate(rs.getTimestamp("createDate"));
-				
+
 				boards.add(board);
 			}
 			
@@ -103,7 +103,7 @@ public class BoardDao {
 		conn = DBConn.getConnection();
 		
 		//한 페이지에 글 3개씩 페이징
-		final String SQL = "SELECT * FROM board ORDER BY id DESC limit ?, 3";
+		final String SQL = "SELECT * FROM board b, user u WHERE b.userId = u.id ORDER BY b.id DESC limit ?, 3";
 		
 		try {
 			List<Board> boards = new ArrayList<Board>();
@@ -115,13 +115,14 @@ public class BoardDao {
 			
 			while(rs.next()) {
 				Board board = new Board();
-				board.setId(rs.getInt("id"));
-				board.setUserId(rs.getInt("userId"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setReadCount(rs.getInt("readCount"));
-				board.setCreateDate(rs.getTimestamp("createDate"));
+				board.setId(rs.getInt("b.id"));
+				board.setUserId(rs.getInt("b.userId"));
+				board.setTitle(rs.getString("b.title"));
+				board.setContent(rs.getString("b.content")+"");
+				board.setReadCount(rs.getInt("b.readCount"));
+				board.setCreateDate(rs.getTimestamp("b.createDate"));
 				
+				board.getUser().setUsername(rs.getString("u.username"));
 				boards.add(board);
 			}
 			
@@ -140,7 +141,7 @@ public class BoardDao {
 	public Board findById(int id) {
 		conn = DBConn.getConnection();
 		
-		final String SQL = "SELECT * FROM board WHERE id = ?";
+		final String SQL = "SELECT * FROM board b, user u WHERE b.userId = u.id AND b.id = ?";
 		
 		try {			
 			pstmt = conn.prepareStatement(SQL);
@@ -150,13 +151,14 @@ public class BoardDao {
 			
 			if(rs.next()) {
 				Board board = new Board();
-				board.setId(rs.getInt("id"));
-				board.setUserId(rs.getInt("userId"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setReadCount(rs.getInt("readCount"));
-				board.setCreateDate(rs.getTimestamp("createDate"));
+				board.setId(rs.getInt("b.id"));
+				board.setUserId(rs.getInt("b.userId"));
+				board.setTitle(rs.getString("b.title"));
+				board.setContent(rs.getString("b.content"));
+				board.setReadCount(rs.getInt("b.readCount"));
+				board.setCreateDate(rs.getTimestamp("b.createDate"));
 				
+				board.getUser().setUsername(rs.getString("u.username"));
 				return board;
 			}
 		} catch (Exception e) {

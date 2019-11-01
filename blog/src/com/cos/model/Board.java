@@ -10,11 +10,13 @@ public class Board {
 	private int readCount;
 	private Timestamp createDate;
 	private String previewImg; //DB와 상관없음
+	private User user = new User(); //DB와 상관없음
 	
 	public Board() {
 	}
 
-	public Board(int id, int userId, String title, String content, int readCount, Timestamp createDate, String previewImg) {
+	public Board(int id, int userId, String title, String content, int readCount, Timestamp createDate,
+			String previewImg, User user) {
 		this.id = id;
 		this.userId = userId;
 		this.title = title;
@@ -22,6 +24,7 @@ public class Board {
 		this.readCount = readCount;
 		this.createDate = createDate;
 		this.previewImg = previewImg;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -79,5 +82,13 @@ public class Board {
 	public void setPreviewImg(String previewImg) {
 		this.previewImg = previewImg;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

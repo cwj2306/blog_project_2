@@ -30,7 +30,7 @@
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<textarea class="form-control"  id="content" name="content">${board.content}</textarea>
+								<textarea class="form-control" id="content" name="content">${board.content}</textarea>
 							</div>
 						</div>
 						<div class="col-md-12 text-right">

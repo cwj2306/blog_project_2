@@ -19,7 +19,7 @@
 							<div class="blog_text">
 								<div class="blog_text_inner">
 									<div class="cat">
-										<a class="cat_btn" href="#">${board.userId}</a> <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> ${board.createDate}</a> <a href="#"><i class="fa fa-comments-o"
+										<a class="cat_btn" href="#">${board.user.username}</a> <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> ${board.createDate}</a> <a href="#"><i class="fa fa-comments-o"
 											aria-hidden="true"> </i>${board.readCount}</a>
 									</div>
 									<a href="#"><h4>${board.title}</h4></a>
