@@ -1,9 +1,0 @@
-package com.cos.util;
-
-public class Test {
-	public static void main(String[] args) {
-		
-		System.out.println("647739598f9f888408486b9b54edb45d98cb2a6bb60da834d8d10ebea78db".length());
-	
-	}
-}

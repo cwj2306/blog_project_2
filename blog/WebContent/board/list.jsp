@@ -35,12 +35,19 @@
 					
 					<nav class="blog-pagination justify-content-center d-flex">
 						<ul class="pagination">
-							<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page>1?param.page-1:1}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span>
-								</span>
-							</a></li>
-							<!-- <li class="page-item"><a href="#" class="page-link">01</a></li> -->
+						
+							<c:if test="${param.page > 1}">
+								<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page-1}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span>
+									</span>
+								</a></li>
+							</c:if>
+							
+							<li class="page-item"><a href="#" class="page-link">01</a></li>
+							<li class="page-item"><a href="#" class="page-link">02</a></li>
+							<li class="page-item"><a href="#" class="page-link">03</a></li>
+							<li class="page-item"><a href="#" class="page-link">04</a></li>
 
-							<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page+1}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span>
+							<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page>0?param.page+1:1}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span>
 								</span>
 							</a></li>
 						</ul>
