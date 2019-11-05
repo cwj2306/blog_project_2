@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 @WebServlet("/test")
 public class AjaxTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,9 +26,13 @@ public class AjaxTest extends HttpServlet {
 		
 		//요청 데이터 처리
 		BufferedReader in = request.getReader();
-		String msg = in.readLine();
-		System.out.println("요청 데이터 : " + msg);
+		String replyJson = in.readLine();
+		System.out.println("요청 데이터 : " + replyJson);
 		
+		Gson gson = new Gson();
+		Reply reply = gson.fromJson(replyJson, Reply.class);
+		System.out.println(reply.getId());
+		System.out.println(reply.getBoardId());
 		
 		//응답 데이터 처리
 		String jsonData = "{\"name\":\"hiii\", \"sal\":100}";

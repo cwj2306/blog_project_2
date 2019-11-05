@@ -39,7 +39,7 @@
 			};
 			
 			xhttp.open("POST", "http://localhost:8000/blog/test", true);
-			xhttp.
+			xhttp.setRequestHeader("Content-type", "application/json");
 			xhttp.send(replyJson);
 		}
 	</script>
