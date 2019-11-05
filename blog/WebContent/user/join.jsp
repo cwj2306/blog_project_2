@@ -1,62 +1,96 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file = "/include/nav.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/include/nav.jsp"%>
 
-	<section class="contact_area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<form class="row contact_form" action="/blog/user?cmd=join" method="post" onsubmit="return validateCheck()">
-					
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" name="username" placeholder="아이디" required="required">
-							</div>
+<section class="contact_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<form class="row contact_form" action="/blog/user?cmd=join" method="post" onsubmit="return validateCheck()">
+
+					<div class="col-md-10">
+						<div class="form-group">
+							<input type="text" class="form-control" id="username" name="username" placeholder="아이디" required="required">
 						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required="required" maxlength="20">
-							</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group float-right">
+							<a style="cursor: pointer;" class="blog_btn" href="#" onclick="usernameCheck()">중복확인</a>
 						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인" required="required" maxlength="20">
-							</div>
+					</div>
+					<span id="username_input" style="font-size:12px; "></span>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required="required" maxlength="20">
 						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="email" class="form-control" name="email" placeholder="이메일" required="required" maxlength="40">
-							</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인" required="required" maxlength="20">
 						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group float-right">
-								<a style="cursor:pointer;" class="blog_btn" href="#" onclick="goPopup()">주소 찾기</a>
-							</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" placeholder="이메일" required="required" maxlength="40">
 						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" name="address" id="roadFullAddr" placeholder="도로명 주소" required="required" readonly="readonly">
-							</div>
+					</div>
+
+					<div class="col-md-10">
+						<div class="form-group">
+							<input type="text" class="form-control" name="address" id="roadFullAddr" placeholder="도로명 주소" required="required" readonly="readonly">
 						</div>
-						
-						<div class="col-md-12 text-right">
-							<button type="submit" value="submit" class="btn submit_btn">Join</button>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group float-right">
+							<a style="cursor: pointer;" class="blog_btn" href="#" onclick="goPopup()">주소찾기</a>
 						</div>
-						
-					</form>
-				</div>
+					</div>
+
+					<div class="col-md-12 text-right">
+						<button type="submit" value="submit" class="btn submit_btn">Join</button>
+					</div>
+
+				</form>
 			</div>
 		</div>
-	</section>
-	
-	<br/><br/>
-	
+	</div>
+</section>
+
+<br />
+<br />
+
 	<script>
+		
+		var usernameOverlapCheck = false;
+		//아이디 중복 확인
+		function usernameCheck(){
+			var username = document.querySelector("#username").value;
+			
+			fetch("/blog/api/user?username="+username).then(function(r){
+				return r.text();
+			}).then(function(r){
+				var status = r; //ok 중복되지 않음.
+				var et = document.querySelector("#username_input");
+	
+				if(status === "ok"){
+					et.style.color="green";
+					et.innerHTML = "사용 가능한 아이디 입니다.";
+					usernameOverlapCheck = true;
+				}else{
+					et.style.color="red";
+					et.innerHTML = "사용할 수 없는 아이디 입니다.";
+					usernameOverlapCheck = false;
+				}
+			});
+			
+			gffgff
+			
+		}
+
 		function validateCheck(){
 			var password = document.querySelector('#password').value;
 			var passwordCheck = document.querySelector('#passwordCheck').value;
@@ -92,4 +126,4 @@
 		}
 	</script>
 
-<%@ include file = "/include/footer.jsp" %>
+<%@ include file="/include/footer.jsp"%>
