@@ -209,7 +209,7 @@
 					//<div id="comment-replys-comment_id"></div>
 					var comment_replys = document.createElement("div");
 					comment_replys.id = "comment-replys-"+comment_id;
-					comment_replys.class = "comment-list-";
+					comment_replys.className = "comment-list";
 					
 					$("#comment-id-"+comment_id).after(comment_replys);
 					

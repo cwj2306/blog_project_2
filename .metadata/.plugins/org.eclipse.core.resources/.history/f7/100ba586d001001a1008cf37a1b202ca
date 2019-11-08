@@ -1,0 +1,12 @@
+<%@page import="com.cos.util.SHA256"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	//code 값 받기
+	String code = request.getParameter("code");
+	
+	//return code값이랑 send code 값 비교
+	boolean rightCode = SHA256.getEncrypt("nomearod21@naver.com", "salt").equals(code);
+			
+			
+	//db에 칼럼 emailCheck(Number) 1=인증, 0=미인증			
+%>

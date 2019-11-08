@@ -1,0 +1,28 @@
+<%@page import="com.cos.util.SHA256"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	String to = request.getParameter("email");
+	String from = "cwj2306@gmail.com";
+	
+	String code = SHA256.getEncrypt(to, "salt");
+	
+	//사용자에게 보낼 메세지
+	String subject = "블로그 회원 가입을 위한 이메일 인증 메일입니다.";
+	StringBuffer sb = new StringBuffer();
+	sb.append("다음 링크에 접속하여 이메일 인증을 진행해주세요.\n");
+	sb.append("<a href='http://localhost:8000/blog/test/gmailCheckAction.jsp?code="+code+"'></a>");
+	
+	
+
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>이메일 주소 인증 메일이 전송되었습니다. 이메일 인증해주세요</h1>
+</body>
+</html>

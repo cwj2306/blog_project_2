@@ -46,7 +46,22 @@ public class BoardListAction implements Action{
 		
 		int numOfBoards = bDao.findAll();
 		int numOfPages = numOfBoards%3==0?numOfBoards/3:numOfBoards/3+1;
-		//페이지 시작, 끝 담고있는 객체로 만들어서 넘기기
+//		int startNum=1;
+//		int endNum=5;
+//		
+//		if(page>3) {
+//			startNum = page-2;
+//		}else {
+//			startNum = 1;
+//		}
+//		
+//		if(page<numOfPages-2) {
+//			endNum = page+2;
+//		}else {
+//			endNum = numOfPages;
+//		}
+		
+
 		request.setAttribute("numOfPages", numOfPages);
 		
 		RequestDispatcher dis = request.getRequestDispatcher("board/list.jsp");
