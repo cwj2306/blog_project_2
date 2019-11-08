@@ -44,25 +44,35 @@ public class BoardListAction implements Action{
 		request.setAttribute("boards", boards);
 		request.setAttribute("hotBoards", hotBoards);
 		
+		//=========페이지 번호 리스트(5개씩 표시) 를 위한 변수==============
 		int numOfBoards = bDao.findAll();
 		int numOfPages = numOfBoards%3==0?numOfBoards/3:numOfBoards/3+1;
-//		int startNum=1;
-//		int endNum=5;
-//		
-//		if(page>3) {
-//			startNum = page-2;
-//		}else {
-//			startNum = 1;
-//		}
-//		
-//		if(page<numOfPages-2) {
-//			endNum = page+2;
-//		}else {
-//			endNum = numOfPages;
-//		}
-		
-
+		if(numOfPages==0) {numOfPages = 1;}
 		request.setAttribute("numOfPages", numOfPages);
+		
+		int startNum=1;
+		int endNum=5;
+
+		if(page<=3) {
+			startNum = 1;
+			endNum = 5;
+		}else if(page>numOfPages-3) {
+			startNum = numOfPages-4; 
+			endNum = numOfPages;
+		}else {
+			startNum = page-2; 
+			endNum = page+2;
+		}
+		
+		if(numOfPages<5) {
+			startNum = 1;
+			endNum = numOfPages;				
+		}
+		
+		request.setAttribute("startNum", startNum);
+		request.setAttribute("endNum", endNum);
+		//==============================================
+		
 		
 		RequestDispatcher dis = request.getRequestDispatcher("board/list.jsp");
 		dis.forward(request, response);

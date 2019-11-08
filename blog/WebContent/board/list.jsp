@@ -36,19 +36,33 @@
 					<nav class="blog-pagination justify-content-center d-flex">
 						<ul class="pagination">
 						
+							<!-- 이전 페이지로 가기 버튼 --> 
 							<c:if test="${param.page > 1}">
-								<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page-1}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span>
+								<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page<=endNum?param.page-1:endNum}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span>
 									</span>
 								</a></li>
 							</c:if>
 							
-							<c:forEach var="i" begin="1" end="${numOfPages}" step="1">
-								<li class="page-item"><a href="/blog/board?cmd=list&page=${i}" class="page-link">${i}</a></li>
+							<!-- 페이지 리스트 (5개씩 표시) --> 
+							<c:forEach var="i" begin="${startNum}" end="${endNum}" step="1">
+							
+								<c:choose>
+									<c:when test="${param.page == i}">
+										<li class="page-item active"><a href="/blog/board?cmd=list&page=${i}" class="page-link">${i}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a href="/blog/board?cmd=list&page=${i}" class="page-link">${i}</a></li>
+									</c:otherwise>
+								</c:choose>
+								
 							</c:forEach>
 							
-							<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page>0?param.page+1:1}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span>
-								</span>
-							</a></li>
+							<!-- 다음 페이지로 가기 버튼 --> 
+							<c:if test="${param.page < endNum}">
+								<li class="page-item"><a href="/blog/board?cmd=list&page=${param.page>0?param.page+1:1}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span>
+									</span>
+								</a></li>
+							</c:if>
 							
 						</ul>
 					</nav>
