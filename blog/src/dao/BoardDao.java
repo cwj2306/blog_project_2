@@ -14,7 +14,7 @@ public class BoardDao {
 	private PreparedStatement pstmt; //SQL 작성을 위한 객체
 	private ResultSet rs; //결과를 보관할 객체
 	
-	//글쓰기
+	// 글수정
 	public int update(Board board) {
 		conn = DBConn.getConnection();
 		
@@ -64,30 +64,18 @@ public class BoardDao {
 	}
 	
 	//리스트 전체
-	public List<Board> findAll(){
+	public int findAll(){
 		conn = DBConn.getConnection();
 		
-		final String SQL = "SELECT * FROM board ORDER BY id DESC";
+		final String SQL = "SELECT count(*) FROM board";
 		
 		try {
-			List<Board> boards = new ArrayList<Board>();
-			
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
-				Board board = new Board();
-				board.setId(rs.getInt("id"));
-				board.setUserId(rs.getInt("userId"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setReadCount(rs.getInt("readCount"));
-				board.setCreateDate(rs.getTimestamp("createDate"));
-
-				boards.add(board);
+			if(rs.next()) {
+				return rs.getInt(1);
 			}
-			
-			return boards;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +83,7 @@ public class BoardDao {
 			DBClose.close(conn, pstmt, rs);
 		}
 		
-		return null;
+		return 0;
 	}
 	
 	//리스트 페이징

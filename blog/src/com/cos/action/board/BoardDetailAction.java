@@ -1,6 +1,7 @@
 package com.cos.action.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cos.action.Action;
 import com.cos.model.Board;
+import com.cos.model.Comment;
 import com.cos.util.Script;
 import com.cos.util.Utils;
 
 import dao.BoardDao;
+import dao.CommentDao;
 
 public class BoardDetailAction implements Action{
 	@Override
@@ -25,6 +28,9 @@ public class BoardDetailAction implements Action{
 		BoardDao dao = new BoardDao();
 		Board board = dao.findById(id);
 		
+		CommentDao commentDao = new CommentDao();
+		List<Comment> comments = commentDao.findByBoardId(id);
+		
 		if(board != null) {
 			//조회수 증가
 			int result = dao.increaseReadCount(id);
@@ -35,6 +41,8 @@ public class BoardDetailAction implements Action{
 				
 				// board를 request에 담고 dispatcher 이동
 				request.setAttribute("board", board);
+				request.setAttribute("comments", comments);
+				
 				RequestDispatcher dis = request.getRequestDispatcher("board/detail.jsp");
 				dis.forward(request, response);
 			}else {

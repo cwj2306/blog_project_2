@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cos.model.Comment;
 import com.google.gson.Gson;
 
 @WebServlet("/test")
@@ -30,7 +31,7 @@ public class AjaxTest extends HttpServlet {
 		System.out.println("요청 데이터 : " + replyJson);
 		
 		Gson gson = new Gson();
-		Reply reply = gson.fromJson(replyJson, Reply.class);
+		Comment reply = gson.fromJson(replyJson, Comment.class);
 		System.out.println(reply.getId());
 		System.out.println(reply.getBoardId());
 		

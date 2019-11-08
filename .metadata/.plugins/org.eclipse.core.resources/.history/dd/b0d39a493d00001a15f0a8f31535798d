@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		let replyJS = {
+				id: null,
+				boardId: 5,
+				userId: 3,
+				content: "내용입니다.",
+				createDate: null
+		}
+		
+		function send(){
+			// json으로 변환
+			let jsonData = JSON.stringify(replyJS);
+			
+			// ajax 호출 /blog/test/reply, post, application/json utf-8
+			$.ajax({
+				url: "/blog/test/reply",
+				type: "POST",
+				data: jsonData,
+				contentType: "application/json; charset=utf-8",
+				success: function(r){
+					alert(r);
+				},
+				error: function(xhr){
+					console.log("xhr.status : " + xhr.status);
+				}
+			});
+			
+			
+			fetch("/blog/test/reply",{
+				method:'POST',
+				headers:{
+					'content-type':'text/plain'	
+				}			
+			}).then(function(fetch에서받은respone객체){
+				return fetch에서받은respone객체.text();
+			}).then(function(위의then에서반환된값){
+				num1 = 위의then에서반환된값;
+				console.log('num1 : ' + num1);
+				getNum2();
+			});
+			
+		}
+	</script>
+	
+</head>
+<body>
+
+	<button onclick="send()">전송</button>
+
+</body>
+</html>

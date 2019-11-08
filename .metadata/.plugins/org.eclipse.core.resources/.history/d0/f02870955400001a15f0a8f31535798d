@@ -1,0 +1,10 @@
+package com.cos.action.comment;
+
+import com.cos.action.Action;
+
+public class UserFactory {
+	public static Action getAction(String cmd) {
+		
+		return null;
+	}
+}

@@ -1,0 +1,48 @@
+package com.cos.test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/test5")
+public class ReplyTest extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public ReplyTest() {
+        super();
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/plain; charset=UTF-8"); //MIME 타입
+		
+		//1. json 데이터 받기, getReader()
+		
+		
+		//2. json 데이터 sysout으로 출력해보기
+		
+		
+		//3. json 데이터 => 자바 객체로 변환
+		
+		
+		//4. 자바 객체 sysout으로 출력해보기
+		
+		PrintWriter out = response.getWriter();
+		out.print("ok");
+		out.flush();
+		
+		
+		
+	}
+
+}

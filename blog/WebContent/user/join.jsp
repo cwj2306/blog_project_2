@@ -87,8 +87,6 @@
 				}
 			});
 			
-			gffgff
-			
 		}
 
 		function validateCheck(){

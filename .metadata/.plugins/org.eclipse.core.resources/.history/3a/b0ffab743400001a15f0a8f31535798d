@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				url: "/blog/test3",
+				type: "POST",
+				dataType: "text",
+				contentType: "text/plain; charset=utf-8",
+				data: "어떤 데이터든지 가능",
+				success: function(){
+					
+				},
+				error: function(){
+					
+				}
+				
+			});
+			
+		});
+	</script>
+	
+</head>
+<body>
+
+	<h1>jQuery로 ajax</h1>
+	
+	<div id="demo"></div>
+	
+	
+	
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		let replyJS = {
+				id: null,
+				boardId: 5,
+				userId: 3,
+				content: "내용입니다.",
+				createDate: null
+		}
+		
+		function send(){
+			// json으로 변환
+			
+			// ajax 호출 /blog/test5, post, application/json utf-8
+			
+			
+		}
+	</script>
+	
+</head>
+<body>
+
+	<button onclick="send()">전송</button>
+
+</body>
+</html>

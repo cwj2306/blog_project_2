@@ -86,8 +86,8 @@
 					usernameOverlapCheck = false;
 				}
 			});
+			
 		}
-
 
 		function validateCheck(){
 			var password = document.querySelector('#password').value;
