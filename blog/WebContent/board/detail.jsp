@@ -61,7 +61,7 @@
 								<div class="reply-btn">
 									<button type="button" class="btn-reply text-uppercase" onclick="commentDelete(${comment.id})" style="display:inline-block; float:left; margin-right:10px;">삭제</button>
 									<button type="button" class="btn-reply text-uppercase" onclick="replyListShow(this,${comment.id})" style="display:inline-block; float:left; margin-right:10px;">보기</button>
-									<button type="button" class="btn-reply text-uppercase" onclick="replyForm(this,${comment.id})" >쓰기</button>
+									<button type="button" class="btn-reply text-uppercase" onclick="replyFormShow(this,${comment.id})" >쓰기</button>
 								</div>
 							</div>
 						</div>
@@ -126,7 +126,7 @@
 	    comment_list += "<div class='reply-btn'>";
 	    comment_list += "<button type='button' onClick='commentDelete("+id+")' class='btn-reply text-uppercase' style='display:inline-block; float:left; margin-right:10px;'>삭제</button>";
 	    comment_list += "<button type='button' onClick='replyListShow(this,"+id+")' class='btn-reply text-uppercase'  style='display:inline-block; float:left; margin-right:10px;'>보기</button>";
-	    comment_list += "<button type='button' onClick='replyForm(this,"+id+")' class='btn-reply text-uppercase'>쓰기</button></div></div></div>";
+	    comment_list += "<button type='button' onClick='replyFormShow(this,"+id+")' class='btn-reply text-uppercase'>쓰기</button></div></div></div>";
 	    
 	    return comment_list;
 	}
@@ -206,7 +206,7 @@
 				success: function(replys){
 					
 					//div 생성
-					//<div id="comment-replys-comment_id"></div>
+					//<div id="comment-replys-comment_id" class="comment-list"></div>
 					var comment_replys = document.createElement("div");
 					comment_replys.id = "comment-replys-"+comment_id;
 					comment_replys.className = "comment-list";
@@ -253,16 +253,17 @@
 	}
 	
 	//reply 쓰는 form 보여주기
-	function replyForm(et, comment_id){
+	function replyFormShow(et, comment_id){
 		if(et.innerHTML==="쓰기"){
 			
 			et.innerHTML = "닫기";
-			var comment_form_inner = "<form id='reply-submit'><div class='form-group'><textarea style='height:60px' class='form-control mb-10' rows='2' name='content' placeholder='Messege' required=''></textarea></div><button class='primary-btn submit_btn'>Post Comment</button></form>";
+			
+			var comment_form_inner = "<form id='reply-submit'><input type='hidden' name='userId' value='${sessionScope.user.id}'/><input type='hidden' name='commentId' value='"+comment_id+"'/><div class='form-group'><textarea style='height:60px' class='form-control mb-10' rows='2' name='content' placeholder='Messege' required=''></textarea></div><button type='button' onclick='replyWrite()' class='primary-btn submit_btn'>Post Comment</button></form>";
 			
 			//div 생성
-			//<div id="comment-form-comment_id" class="comment-form" style="margin-top: 0px;"></div>
+			//<div id="reply-form-comment_id" class="comment-form" style="margin-top: 0px;"></div>
 			var comment_form = document.createElement("div");
-			comment_form.id = "comment-form-"+comment_id;
+			comment_form.id = "reply-form-"+comment_id;
 			comment_form.className = "comment-form";
 			comment_form.style = "margin-top: 0px";
 			
@@ -274,11 +275,40 @@
 		}else{
 			
 			et.innerHTML = "쓰기";
-			$("#comment-form-"+comment_id).remove();
+			$("#reply-form-"+comment_id).remove();
 			
 		}
 		 
 	}
+	
+	
+	//reply 쓰기
+	function replyWrite(){
+		
+		var reply_submit_string = $("#reply-submit").serialize();
+		$.ajax({
+			method: "POST",
+			url: "/blog/api/reply?cmd=write",
+			data: reply_submit_string,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			dataType: "json", //받은 데이터를 자바스크립트 객체로 자동으로 변환해줌 따라서 아래의 comment는 문자열이 아니라 객체임
+			
+			success: function(reply){
+				//화면에 적용
+//				var comment_et = commentWriteForm(comment.id, comment.user.username, comment.content, comment.createDate);
+//				$("#comments-area").append(comment_et);
+				//입력폼 초기화하기
+//				$("#content").val("");
+				
+				console.log(reply);
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		});
+		
+	}
+	
 	
 </script>
 

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cos.model.Comment;
 import com.cos.model.Reply;
 import com.cos.util.DBClose;
 
@@ -137,4 +138,41 @@ public class ReplyDao {
 
 		return null;
 	}
+	
+	
+	public Reply findLastReply() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("select r.id, r.userId, r.commentId, r.content, r.createDate, u.username ");
+		sb.append("from reply r, user u ");
+		sb.append("where r.userId = u.id ");
+		sb.append("and r.id = (select max(id) from reply)");
+		
+		conn = DBConn.getConnection();
+
+		final String SQL = sb.toString();
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				Reply reply = new Reply();
+				reply.setId(rs.getInt("r.id"));
+				reply.setUserId(rs.getInt("r.userId"));
+				reply.setCommentId(rs.getInt("r.commentId"));
+				reply.setContent(rs.getString("r.content"));
+				reply.setCreateDate(rs.getTimestamp("r.createDate"));
+				reply.getUser().setUsername(rs.getString("u.username"));
+				
+				return reply;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return null;
+	}
+	
 }

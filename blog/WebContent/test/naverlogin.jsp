@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%
-		String clientId = "t0izhBB8BZsfisTjvwPn";//애플리케이션 클라이언트 아이디값";
+		String clientId = "your_client_id";//애플리케이션 클라이언트 아이디값";
 		String redirectURI = URLEncoder.encode("http://localhost:8000/blog/test/navercallback.jsp", "UTF-8");
 		SecureRandom random = new SecureRandom();
 		String state = new BigInteger(130, random).toString();
