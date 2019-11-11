@@ -6,6 +6,6 @@ import javax.mail.PasswordAuthentication;
 public class Gmail extends Authenticator {
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
-		return new PasswordAuthentication("@gmail.com", Password.GOOGLEPASSWORD);
+		return new PasswordAuthentication("cwj2306@gmail.com", Password.GOOGLEPASSWORD);
 	}
 }

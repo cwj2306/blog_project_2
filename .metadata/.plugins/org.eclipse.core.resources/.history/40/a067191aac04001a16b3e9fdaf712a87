@@ -1,0 +1,42 @@
+<%@page import="dao.UserDao"%>
+<%@page import="com.cos.model.User"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="com.cos.util.SHA256"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	//code 값 받기
+	String code = request.getParameter("code");
+	//String email = request.getParameter("email");
+	
+	HttpSession s = request.getSession();
+	User user = (User)s.getAttribute("emailAuth");
+	
+	//return code값이랑 send code 값 비교
+	boolean rightCode = SHA256.getEncrypt(user.getEmail(), "salt").equals(code);
+		
+	PrintWriter script = response.getWriter();
+	if(rightCode){
+		//인증 성공
+		//db emailCheck컬럼 1로 update
+		UserDao userDao = new UserDao();
+		int result = userDao.updateEmailCheck(user.getUsername());
+		
+		if (result == 1) {
+			script.println("<script>");
+			script.println("alert('이메일 인증에 성공하였습니다.')");
+			script.println("location.href='/blog/user/login.jsp'");
+			script.println("</script>");
+		} else {
+			Script.back(response);
+		}
+		
+		
+		
+	} else{
+		script.println("<script>");
+		script.println("alert('이메일 인증을 실패하였습니다.')");
+		script.println("location.href='errorPage.jsp'");
+		script.println("</script>");
+	}
+			
+%>

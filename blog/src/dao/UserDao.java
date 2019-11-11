@@ -14,6 +14,30 @@ public class UserDao {
 	private PreparedStatement pstmt; // SQL 작성을 위한 객체
 	private ResultSet rs; // 결과를 보관할 객체
 
+	
+	public int updateEmailCheck(String username) {
+
+		conn = DBConn.getConnection();
+
+		final String SQL = "UPDATE user SET emailCheck = 1 WHERE username = ?";
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+
+			pstmt.setString(1, username);
+
+			int result = pstmt.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+
+		return -1;
+	}
+	
+	
 	// 회원가입
 	public int save(User user) {
 

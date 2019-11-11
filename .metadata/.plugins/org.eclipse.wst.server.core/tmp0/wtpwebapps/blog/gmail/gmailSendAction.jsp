@@ -25,7 +25,7 @@
 	String subject = "블로그 회원 가입을 위한 이메일 인증 메일입니다.";
 	StringBuffer sb = new StringBuffer();
 	sb.append("다음 링크에 접속하여 이메일 인증을 진행해주세요.\n");
-	sb.append("<a href='http://localhost:8000/blog/gmail/gmailCheckAction.jsp?code="+code+"&email="+to+"'>이메일 인증하기</a>");
+	sb.append("<a href='http://localhost:8000/blog/gmail/gmailCheckAction.jsp?code="+code+"'>이메일 인증하기</a>");
 	String content = sb.toString();
 	
 	//설정 값

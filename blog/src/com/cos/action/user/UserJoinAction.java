@@ -1,11 +1,11 @@
 package com.cos.action.user;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cos.action.Action;
 import com.cos.model.User;
@@ -38,10 +38,9 @@ public class UserJoinAction implements Action{
 		int result = dao.save(user);
 		
 		if (result == 1) {
-			// DB에서 user객체 들고와서 session에 등록하거나
-			// gmailSendAction.jsp 에서 a 태그 href에 email을 쿼리스트링으로 들고가거나
-			
-			
+			//세션 등록
+			HttpSession session = request.getSession();
+			session.setAttribute("emailAuth", user);
 			
 			response.sendRedirect("/blog/gmail/gmailSendAction.jsp?email="+email);
 		}else {
