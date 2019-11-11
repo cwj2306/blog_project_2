@@ -38,7 +38,12 @@ public class UserJoinAction implements Action{
 		int result = dao.save(user);
 		
 		if (result == 1) {
-			response.sendRedirect("/blog/user/login.jsp");
+			// DB에서 user객체 들고와서 session에 등록하거나
+			// gmailSendAction.jsp 에서 a 태그 href에 email을 쿼리스트링으로 들고가거나
+			
+			
+			
+			response.sendRedirect("/blog/gmail/gmailSendAction.jsp?email="+email);
 		}else {
 			Script.back(response);
 		}

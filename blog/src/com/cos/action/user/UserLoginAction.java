@@ -28,9 +28,9 @@ public class UserLoginAction implements Action{
 		
 		String password = SHA256.getEncrypt(rawPassword, "cos");
 		
-		System.out.println(TAG + "username : " + username);
-		System.out.println(TAG + "password : " + password);
-		System.out.println(TAG + "cookie : " + rememberMe);
+//		System.out.println(TAG + "username : " + username);
+//		System.out.println(TAG + "password : " + password);
+//		System.out.println(TAG + "cookie : " + rememberMe);
 		
 		UserDao dao = new UserDao();
 		int result = dao.findByUsernameAndPassword(username, password);

@@ -6,7 +6,6 @@
 <fullyQualifiedTypeName name="dao.DBConn"/>
 <fullyQualifiedTypeName name="com.cos.util.DBClose"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
-<fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
@@ -38,7 +37,6 @@
 <fullyQualifiedTypeName name="java.sql.Connection"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.cos.util.Script"/>
 <fullyQualifiedTypeName name="com.google.gson.Gson"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
@@ -49,4 +47,6 @@
 <fullyQualifiedTypeName name="com.cos.action.Action"/>
 <fullyQualifiedTypeName name="dao.ReplyDao"/>
 <fullyQualifiedTypeName name="com.cos.model.Reply"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
 </qualifiedTypeNameHistroy>
