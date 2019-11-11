@@ -2,13 +2,13 @@ package com.cos.action.reply;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cos.action.Action;
-import com.cos.model.Comment;
 import com.cos.model.Reply;
 import com.cos.util.Script;
 import com.google.gson.Gson;
@@ -27,29 +27,31 @@ public class ReplyWriteAction implements Action{
 		reply.setUserId(userId);
 		reply.setContent(content);
 		
+		//db에 insert하고
 		ReplyDao replyDao = new ReplyDao();
 		int result = replyDao.save(reply);
 		
 		if(result==1) {
-			//reply 테이블의 가장 마지막 튜플 가져오기
-			Reply lastReply = replyDao.findLastReply();
-			lastReply.getResponseData().setStatusCode(1);
-			lastReply.getResponseData().setStatus("ok");
-			lastReply.getResponseData().setStatusMessage("write was completed");
+			//모든 reply 다 들고오기
+			List<Reply> replys = replyDao.findByCommentId(commentId);
 			
-			Gson gson = new Gson();
-			String lastReplyJson = gson.toJson(lastReply);
-			
-			response.setContentType("application/json; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.print(lastReplyJson);
-			out.flush();
+			if(replys != null) {
+				Gson gson = new Gson();
+				String replysJson = gson.toJson(replys);
+				
+				response.setContentType("application/json; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.print(replysJson);
+				out.flush();
+						
+			}else {
+				Script.back(response);
+			}
 			
 		}else {
 			Script.back(response);
 		}
 		
-		
-		
 	}
+
 }

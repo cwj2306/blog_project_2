@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,7 +34,27 @@ public class BoardDetailAction implements Action{
 		
 		if(board != null) {
 			//조회수 증가
-			int result = dao.increaseReadCount(id);
+			
+			boolean readFirst = true;
+			
+			//request의 쿠기 전부 조회
+			Cookie[] cookies = request.getCookies();
+			for (Cookie c : cookies) {
+				if( c.getName().equals("myCookie"+id) ) {
+					readFirst = false;
+					break;
+				}
+			}
+			
+			int result = 1;
+			//없으면 response에 쿠키 담기
+			if(readFirst) {
+				Cookie cookie = new Cookie("myCookie"+id, id+"");
+				cookie.setMaxAge(86400);//sec
+				response.addCookie(cookie);
+				
+				result = dao.increaseReadCount(id);
+			}
 			
 			if(result==1) {
 				//유투브 주소 파싱

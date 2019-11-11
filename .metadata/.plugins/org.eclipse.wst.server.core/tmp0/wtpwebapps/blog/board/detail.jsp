@@ -204,20 +204,20 @@
 				dataType: "json",
 				
 				success: function(replys){
-					
-					//div 생성
-					//<div id="comment-replys-comment_id" class="comment-list"></div>
-					var comment_replys = document.createElement("div");
-					comment_replys.id = "comment-replys-"+comment_id;
-					comment_replys.className = "comment-list";
-					
-					$("#comment-id-"+comment_id).after(comment_replys);
-					
-					for(reply of replys){
-						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate);
-						$("#comment-replys-"+comment_id).append(reply_et);
+					if(replys.length > 0){
+						//div 생성
+						//<div id="comment-replys-comment_id" class="comment-list"></div>
+						var comment_replys = document.createElement("div");
+						comment_replys.id = "comment-replys-"+comment_id;
+						comment_replys.className = "comment-list";
+						
+						$("#comment-id-"+comment_id).after(comment_replys);
+						
+						for(reply of replys){
+							var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate);
+							$("#comment-replys-"+comment_id).append(reply_et);
+						}
 					}
-
 				},
 				error: function(xhr){
 					console.log(xhr);
@@ -230,7 +230,7 @@
 			$("#comment-replys-"+comment_id).remove();
 			
 		}
-		
+
 	}
 	
 	//reply 삭제
@@ -286,6 +286,7 @@
 	function replyWrite(){
 		
 		var reply_submit_string = $("#reply-submit").serialize();
+		
 		$.ajax({
 			method: "POST",
 			url: "/blog/api/reply?cmd=write",
@@ -293,20 +294,39 @@
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			dataType: "json", //받은 데이터를 자바스크립트 객체로 자동으로 변환해줌 따라서 아래의 comment는 문자열이 아니라 객체임
 			
-			success: function(reply){
-				//화면에 적용
-//				var comment_et = commentWriteForm(comment.id, comment.user.username, comment.content, comment.createDate);
-//				$("#comments-area").append(comment_et);
-				//입력폼 초기화하기
-//				$("#content").val("");
+			success: function(replys){
 				
-				console.log(reply);
+				if(replys.length > 0){
+					
+					var comment_id = replys[0].commentId;
+					
+					var btns = $("#comment-id-"+comment_id+" .reply-btn button");
+					btns[btns.length-2].textContent = "닫기";
+					btns[btns.length-1].textContent = "쓰기";
+					
+					$("#reply-form-"+comment_id).remove();
+					$("#comment-replys-"+comment_id).remove();
+					
+					//div 생성
+					//<div id="comment-replys-comment_id" class="comment-list"></div>
+					var comment_replys = document.createElement("div");
+					comment_replys.id = "comment-replys-"+comment_id;
+					comment_replys.className = "comment-list";
+					
+					$("#comment-id-"+comment_id).after(comment_replys);
+					
+					for(reply of replys){
+						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate);
+						$("#comment-replys-"+comment_id).append(reply_et);
+					}
+				}
+				
 			},
 			error: function(xhr){
 				console.log(xhr);
 			}
 		});
-		
+
 	}
 	
 	

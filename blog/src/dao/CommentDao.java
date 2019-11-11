@@ -17,7 +17,7 @@ public class CommentDao {
 	
 	
 	// 마지막 comment 가져오기
-	synchronized public Comment findLastComment() {
+	public Comment findLastComment() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("select c.id, c.userId, c.boardId, c.content, c.createDate, u.username ");
 		sb.append("from comment c, user u ");
