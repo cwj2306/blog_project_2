@@ -4,9 +4,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title></title>
 </head>
 <body>
-	<h1>인증 오류. 잘못된 코드</h1>
+	<h1>인증 코드 오류</h1>
 </body>
 </html>

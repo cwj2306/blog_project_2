@@ -35,6 +35,7 @@ public class UserLoginAction implements Action{
 		UserDao dao = new UserDao();
 		int result = dao.findByUsernameAndPassword(username, password);
 		
+		//-1:로그인 실패 , 0:이메일 미인증 , 1:로그인 성공
 		if (result == 1) {
 
 			User user = dao.findByUsername(username);
@@ -56,6 +57,9 @@ public class UserLoginAction implements Action{
 			
 			response.sendRedirect("/blog");			
 
+		} else if(result==0){
+			
+			response.sendRedirect("/blog/user/noEmailCheck.jsp");
 		} else {
 			Script.back(response);
 		}

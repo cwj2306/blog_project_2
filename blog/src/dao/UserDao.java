@@ -92,7 +92,7 @@ public class UserDao {
 
 		conn = DBConn.getConnection();
 
-		final String SQL = "SELECT count(id) FROM user WHERE username=? and password=?";
+		final String SQL = "SELECT emailCheck FROM user WHERE username=? and password=?";
 
 		try {
 			pstmt = conn.prepareStatement(SQL);
@@ -102,9 +102,10 @@ public class UserDao {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next()) {//로그인 성공
 				int result = rs.getInt(1);
-				return result;
+				
+				return result;// 1: 이메일 인증, 0 : 이메일 미인증
 			}
 
 		} catch (Exception e) {
@@ -112,7 +113,7 @@ public class UserDao {
 		} finally {
 			DBClose.close(conn, pstmt, rs);
 		}
-
+		//아이디 or 비밀번호가 틀림
 		return -1;
 	}
 

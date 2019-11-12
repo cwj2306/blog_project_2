@@ -46,6 +46,7 @@
 						<!-- 댓글 아이템 시작 -->
 						<div class="comment-list" id="comment-id-${comment.id}">
 							<div class="single-comment justify-content-between d-flex">
+							
 								<div class="user justify-content-between d-flex">
 									<div class="thumb">
 										<img src="${comment.user.userProfile}" width="40px" height="40px" style="border-radius: 50%;"/>
@@ -58,11 +59,19 @@
 										<p class="comment" style="word-break:break-all;">${comment.content}</p>
 									</div>
 								</div>
+								
 								<div class="reply-btn">
-									<button type="button" class="btn-reply text-uppercase" onclick="commentDelete(${comment.id})" style="display:inline-block; float:left; margin-right:10px;">삭제</button>
+									<c:if test='${comment.userId==sessionScope.user.id}'>
+										<button type="button" class="btn-reply text-uppercase" onclick="commentDelete(${comment.id})" style="display:inline-block; float:left; margin-right:10px;">삭제</button>
+									</c:if>
+									
 									<button type="button" class="btn-reply text-uppercase" onclick="replyListShow(this,${comment.id})" style="display:inline-block; float:left; margin-right:10px;">보기</button>
-									<button type="button" class="btn-reply text-uppercase" onclick="replyFormShow(this,${comment.id})" >쓰기</button>
+									
+									<c:if test="${not empty sessionScope.user}">
+										<button type="button" class="btn-reply text-uppercase" onclick="replyFormShow(this,${comment.id})" >쓰기</button>
+									</c:if>
 								</div>
+								
 							</div>
 						</div>
 						<!-- 댓글 아이템 끝 -->
@@ -102,7 +111,9 @@
 						</div>
 						<!-- 버튼 타입 submit을해주면 부조건 새로고침되서 onClick를 쓴다. -->
 						<!-- 버튼 타입을 button을해주면 자바스크립트에서 바로 submit 되는걸 막아줌 -->
-						<button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>
+						<c:if test="${not empty sessionScope.user}">
+							<button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>						
+						</c:if>
 					</form>
 				</div>
 				<!-- 댓글 쓰기 끝 -->
@@ -176,7 +187,7 @@
 		});
 	}
 	
-	function replyItemForm(id, username, content, createDate, userProfile){
+	function replyItemForm(id, username, content, createDate, userProfile, userId){
 		var replyItem = "<div id='reply-id-"+id+"' class='comment-list left-padding'>";
 		replyItem+= "<div class='single-comment justify-content-between d-flex'>";
 		replyItem+= "<div class='user justify-content-between d-flex'>";
@@ -184,8 +195,12 @@
 		replyItem+= "<div class='desc'><h5><a href='#'>"+username+"</a></h5>";
 		replyItem+= "<p class='date'>"+createDate+"</p>";
 		replyItem+= "<p class='comment' style='word-break:break-all;'>"+content+"</p>";
-		replyItem+= "</div></div><div class='reply-btn'><button type='button' onClick='replyDelete("+id+")' class='btn-reply text-uppercase'>삭제</button>";
-		replyItem+= "</div></div></div>";
+		replyItem+= "</div></div>";
+		var sessionUserId = ${sessionScope.user.id}+"";
+		if(sessionUserId==userId){
+			replyItem+= "<div class='reply-btn'><button type='button' onClick='replyDelete("+id+")' class='btn-reply text-uppercase'>삭제</button></div>";	
+		}
+		replyItem+= "</div></div>";
 		
 		return replyItem;
 	}
@@ -214,7 +229,7 @@
 						$("#comment-id-"+comment_id).after(comment_replys);
 						
 						for(reply of replys){
-							var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile);
+							var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile, reply.userId);
 							$("#comment-replys-"+comment_id).append(reply_et);
 						}
 					}
@@ -301,8 +316,9 @@
 					var comment_id = replys[0].commentId;
 					
 					var btns = $("#comment-id-"+comment_id+" .reply-btn button");
+					
 					btns[btns.length-2].textContent = "닫기";
-					btns[btns.length-1].textContent = "쓰기";
+					btns[btns.length-1].textContent = "쓰기";	
 					
 					$("#reply-form-"+comment_id).remove();
 					$("#comment-replys-"+comment_id).remove();
@@ -316,7 +332,7 @@
 					$("#comment-id-"+comment_id).after(comment_replys);
 					
 					for(reply of replys){
-						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile);
+						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile, reply.userId);
 						$("#comment-replys-"+comment_id).append(reply_et);
 					}
 				}
