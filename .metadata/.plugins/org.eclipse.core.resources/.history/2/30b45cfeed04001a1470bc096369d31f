@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+
+	<div id="img__wrap">
+	
+	</div>
+
+	<!-- enctype는 mime타입에서 찾아봐서 써주자 -->
+	<form action="uploadAction.jsp" method ="POST" enctype="multipart/form-data">
+		username : <input type="text" name="username" /><br />
+		image : <input id="img__input" type="file" name="userProfile"/><br />
+		<input type = "submit" value="전송"/>
+	</form>
+	
+	
+	<script src="/blog/js/jquery-3.2.1.min.js"></script>
+</body>
+</html>

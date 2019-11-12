@@ -12,6 +12,8 @@ public class UserFactory {
 			return new UserLogoutAction();
 		}else if(cmd.equals("update")) {
 			return new UserUpdateAction();
+		}else if(cmd.equals("uploadProfileImg")) {
+			return new UserUploadProfileImg();
 		}
 		
 		return null;

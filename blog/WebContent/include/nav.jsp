@@ -56,10 +56,16 @@
 								
 							</ul>
 							<ul class="nav navbar-nav navbar-right header_social ml-auto">
+								<!-- 
 								<li class="nav-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
 								<li class="nav-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
 								<li class="nav-item"><a href="#"><i class="fa fa-dribbble"></i></a></li>
 								<li class="nav-item"><a href="#"><i class="fa fa-behance"></i></a></li>
+								 -->
+								 <c:if test="${not empty sessionScope.user}">
+								 	<a href="/blog/user/userProfileForm.jsp"><img src = "${sessionScope.user.userProfile}" width="40px" height="40px" style="border-radius: 50%;"/></a>
+								 </c:if>
+								 
 							</ul>
 						</div> 
 					</div>

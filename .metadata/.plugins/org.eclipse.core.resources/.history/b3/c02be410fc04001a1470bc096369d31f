@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/include/nav.jsp"%>
+
+<section class="contact_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- 
+				<form class="row contact_form" action="/blog/user?cmd=update" method="post" onsubmit="return validateCheck()">
+					<input type="hidden" name="id" value="${sessionScope.user.id}">
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="text" class="form-control" value="${sessionScope.user.username}" name="username" placeholder="아이디" readonly="readonly">
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required="required" maxlength="20">
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인" required="required" maxlength="20">
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="email" class="form-control" value="${sessionScope.user.email}" name="email" placeholder="이메일" maxlength="40" readonly="readonly">
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group float-right">
+							<a style="cursor:pointer;" class="blog_btn" href="#" onclick="goPopup()">주소 찾기</a>
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="text" class="form-control" value="${sessionScope.user.address}"name="address" id="roadFullAddr" placeholder="도로명 주소" required="required" readonly="readonly">
+						</div>
+					</div>
+					
+					<div class="col-md-12 text-right">
+						<button type="submit" value="submit" class="btn submit_btn">Save</button>
+					</div>
+					-->
+
+				<div>
+					<img id="img__wrap" />
+				</div>
+
+				<!-- enctype는 mime타입에서 찾아봐서 써주자 -->
+				<form action="/blog/user?cmd=uploadProfileImg" method="POST" enctype="multipart/form-data">
+					image : <input id="img__input" type="file" name="userProfile" /><br />
+					<input type="submit" value="전송" />
+				</form>
+
+				<script src="/blog/js/jquery-3.2.1.min.js"></script>
+				<script>
+					$("#img__input").on("change", handleImgFile);
+
+					function handleImgFile(e) {
+
+						var f = e.target.files[0];
+
+						if (f.type.match("image.*")) {
+							var reader = new FileReader();
+
+							reader.onload = function(e) {
+								console.log(e.target.result);
+								$("#img__wrap").attr("src", e.target.result);
+							}
+
+							reader.readAsDataURL(f);
+						} else {
+							alert("이미지 파일이 아닙니다.");
+							$("#img__wrap").attr("src", "");
+						}
+
+					}
+				</script>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+<%@ include file="/include/footer.jsp"%>

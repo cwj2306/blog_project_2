@@ -33,8 +33,7 @@ public class BoardDetailAction implements Action{
 		List<Comment> comments = commentDao.findByBoardId(id);
 		
 		if(board != null) {
-			//조회수 증가
-			
+			//============== 조회수 무한 증가 방지===============
 			boolean readFirst = true;
 			
 			//request의 쿠기 전부 조회
@@ -55,6 +54,7 @@ public class BoardDetailAction implements Action{
 				
 				result = dao.increaseReadCount(id);
 			}
+			//=======================================
 			
 			if(result==1) {
 				//유투브 주소 파싱

@@ -103,7 +103,7 @@ public class ReplyDao {
 	public List<Reply> findByCommentId(int commentId) {
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("select r.id, r.commentId, r.userId, r.content, r.createDate, u.username ");
+		sb.append("select r.id, r.commentId, r.userId, r.content, r.createDate, u.username, u.userProfile ");
 		sb.append("from reply r, user u ");
 		sb.append("where r.userId = u.id and commentId = ?");
 
@@ -126,6 +126,8 @@ public class ReplyDao {
 				reply.setContent(rs.getString("r.content"));
 				reply.setCreateDate(rs.getTimestamp("r.createDate"));
 				reply.getUser().setUsername(rs.getString("u.username"));
+				reply.getUser().setUserProfile(rs.getString("u.userProfile"));
+				
 				replys.add(reply);
 			}
 

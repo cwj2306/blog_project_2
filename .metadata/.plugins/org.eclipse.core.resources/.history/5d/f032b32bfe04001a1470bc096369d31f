@@ -1,0 +1,35 @@
+package com.cos.action.user;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.cos.action.Action;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+public class UserUploadProfileImg implements Action{
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String path = request.getServletContext().getRealPath("media");
+
+		MultipartRequest multi = new MultipartRequest(
+				request,
+				path, //경로 
+				1024*1024*2, //2MB
+				"UTF-8", //인코딩방식
+				new DefaultFileRenamePolicy() //동일한 파일명이 들어오면 파일명 뒤에 숫자를 붙임.			
+		);
+		
+		String userId = multi.getParameter("userId");
+		String filename = multi.getFilesystemName("userProfile"); //정책에 의해서 변경된 이름
+		String originFilename = multi.getOriginalFileName("userProfile");//원래 파일 이름
+		String contextPath = getServletContext().getContextPath();
+		
+		String filepath = contextPath + "/media/"+filename;		
+	}
+}

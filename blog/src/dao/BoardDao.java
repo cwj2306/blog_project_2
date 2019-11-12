@@ -147,6 +147,7 @@ public class BoardDao {
 				board.setCreateDate(rs.getTimestamp("b.createDate"));
 				
 				board.getUser().setUsername(rs.getString("u.username"));
+				board.getUser().setUserProfile(rs.getString("u.userProfile"));
 				return board;
 			}
 		} catch (Exception e) {

@@ -26,7 +26,7 @@
 									<p>${board.createDate}</p>
 								</div>
 								<div class="d-flex">
-									<img src="/blog/img/blog/user-img.jpg" alt="">
+									<img src = "${board.user.userProfile}" width="40px" height="40px" style="border-radius: 50%;"/>
 								</div>
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 							<div class="single-comment justify-content-between d-flex">
 								<div class="user justify-content-between d-flex">
 									<div class="thumb">
-										<img src="img/blog/c1.jpg" alt="">
+										<img src="${comment.user.userProfile}" width="40px" height="40px" style="border-radius: 50%;"/>
 									</div>
 									<div class="desc">
 										<h5>
@@ -116,11 +116,11 @@
 
 <!-- ==============Comment Script============== -->
 <script>
-	function commentWriteForm(id, username, content, createDate){
+	function commentWriteForm(id, username, content, createDate, userProfile){
 	    var comment_list = "<div class='comment-list' id='comment-id-"+id+"'> ";
 	    comment_list += "<div class='single-comment justify-content-between d-flex'> ";
 	    comment_list += "<div class='user justify-content-between d-flex'> ";
-	    comment_list += "<div class='thumb'> <img src='img/blog/c1.jpg' alt=''> </div> ";
+	    comment_list += "<div class='thumb'> <img src='"+userProfile+"' width='40px' height='40px' style='border-radius: 50%;'> </div> ";
 	    comment_list += "<div class='desc'><h5><a href='#'>"+username+"</a></h5> ";
 	    comment_list += "<p class='date'>"+createDate+"</p><p class='comment' style='word-break:break-all;'>"+content+"</p></div></div> ";
 	    comment_list += "<div class='reply-btn'>";
@@ -144,7 +144,7 @@
 			
 			success: function(comment){
 				//화면에 적용
-				var comment_et = commentWriteForm(comment.id, comment.user.username, comment.content, comment.createDate);
+				var comment_et = commentWriteForm(comment.id, comment.user.username, comment.content, comment.createDate, comment.user.userProfile);
 				$("#comments-area").append(comment_et);
 				//입력폼 초기화하기
 				$("#content").val("");
@@ -176,11 +176,11 @@
 		});
 	}
 	
-	function replyItemForm(id, username, content, createDate){
+	function replyItemForm(id, username, content, createDate, userProfile){
 		var replyItem = "<div id='reply-id-"+id+"' class='comment-list left-padding'>";
 		replyItem+= "<div class='single-comment justify-content-between d-flex'>";
 		replyItem+= "<div class='user justify-content-between d-flex'>";
-		replyItem+= "<div class='thumb'><img src='img/blog/c2.jpg' alt=''></div>";
+		replyItem+= "<div class='thumb'><img src='"+userProfile+"' width='40px' height='40px' style='border-radius: 50%;'> </div> ";
 		replyItem+= "<div class='desc'><h5><a href='#'>"+username+"</a></h5>";
 		replyItem+= "<p class='date'>"+createDate+"</p>";
 		replyItem+= "<p class='comment' style='word-break:break-all;'>"+content+"</p>";
@@ -214,7 +214,7 @@
 						$("#comment-id-"+comment_id).after(comment_replys);
 						
 						for(reply of replys){
-							var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate);
+							var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile);
 							$("#comment-replys-"+comment_id).append(reply_et);
 						}
 					}
@@ -316,7 +316,7 @@
 					$("#comment-id-"+comment_id).after(comment_replys);
 					
 					for(reply of replys){
-						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate);
+						var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile);
 						$("#comment-replys-"+comment_id).append(reply_et);
 					}
 				}

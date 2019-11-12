@@ -35,7 +35,6 @@
 			script.println("<script>");
 			script.println("alert('일시적 오류입니다. 링크를 통해 다시 인증해 주세요.')");
 			script.println("</script>");
-			Script.back(response);
 		}
 		
 	} else{
